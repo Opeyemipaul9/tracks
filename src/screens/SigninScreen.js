@@ -7,7 +7,7 @@ const SigninScreen = () => {
 
   return (
     <View>
-      <Button title="Go to Main Screen" onPress={login} />
+      <Text style={{fontSize: 30}}> Sign In</Text>
     </View>
   );
 };

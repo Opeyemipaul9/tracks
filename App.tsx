@@ -9,7 +9,7 @@ import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import TrackListScreen from './src/screens/TrackListScreen';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import {AuthContext} from './src/context/AuthContext';
+import {Provider as AuthProvider} from './src/context/AuthContext';
 
 const Stack = createNativeStackNavigator();
 const TabStack = createBottomTabNavigator();
@@ -34,43 +34,52 @@ const Bottomtab = () => {
 };
 
 const App = () => {
-  const [loggedIn, setloggedIn] = useState(true);
+  const [loggedIn, setloggedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const login = () => setloggedIn(true);
+  const signup = () => setloggedIn(true);
   const logout = () => setloggedIn(false);
 
   return (
     <SafeAreaProvider>
-      <AuthContext.Provider value={{loggedIn, login, logout}}>
-        <SafeAreaView style={{flex: 1}}>
-          <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              {loggedIn ? (
+      <SafeAreaView style={{flex: 1}}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {loggedIn ? (
+              <Stack.Group screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Bottomtab" component={Bottomtab} />
-              ) : (
-                <Stack.Group>
-                  <Stack.Screen
-                    name="Signup"
-                    component={SignupScreen}
-                    options={{
-                      title: 'Sign Up',
-                    }}
-                  />
-                  <Stack.Screen
-                    name="Signin"
-                    component={SigninScreen}
-                    options={{
-                      title: 'Sign in',
-                    }}
-                  />
-                </Stack.Group>
-              )}
-            </Stack.Navigator>
-          </NavigationContainer>
-        </SafeAreaView>
-      </AuthContext.Provider>
+              </Stack.Group>
+            ) : (
+              <Stack.Group screenOptions={{headerShown: false}}>
+                <Stack.Screen
+                  name="Signup"
+                  component={SignupScreen}
+                  options={{
+                    title: 'Sign Up',
+                  }}
+                />
+                <Stack.Screen
+                  name="Signin"
+                  component={SigninScreen}
+                  options={{
+                    title: 'Sign in',
+                  }}
+                />
+              </Stack.Group>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 };
 
-export default App;
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};
