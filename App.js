@@ -10,6 +10,7 @@ import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import TrackListScreen from './src/screens/TrackListScreen';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {Provider as AuthProvider} from './src/context/AuthContext';
+import {setNavigator} from './src/navigationref';
 
 const Stack = createNativeStackNavigator();
 const TabStack = createBottomTabNavigator();
@@ -45,7 +46,10 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{flex: 1}}>
-        <NavigationContainer>
+        <NavigationContainer
+          ref={navigator => {
+            setNavigator(navigator);
+          }}>
           <Stack.Navigator>
             {loggedIn ? (
               <Stack.Group screenOptions={{headerShown: false}}>

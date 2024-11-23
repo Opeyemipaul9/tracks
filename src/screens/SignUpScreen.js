@@ -13,11 +13,11 @@ const SignupScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Spacer>
-        <Text h3> Sign Up for Tracker </Text>
-      </Spacer>
+      <View style={{marginVertical: 10}}>
+        <Text h3> {'Sign Up for Tracker'} </Text>
+      </View>
       <Input label="Email" value={email} onChangeText={setEmail} />
-      <Spacer />
+      <View style={{height: 10}} />
       <Input
         label="Password"
         value={password}
@@ -26,13 +26,17 @@ const SignupScreen = () => {
         autoCorrect={false}
         secureTextEntry
       />
-      <Spacer>
+      {state.errorMessage ? (
+        <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+      ) : (
+        <></>
+      )}
+      <View style={{marginVertical: 10}}>
         <Button
-          title="Go to Sign in "
+          title={'Go to Sign in '}
           onPress={() => signup({email, password})}
         />
-        {/* <Button title="Go to Main Screen" onPress={login} /> */}
-      </Spacer>
+      </View>
     </View>
   );
 };
@@ -42,6 +46,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginBottom: 200,
+  },
+  errorMessage: {
+    fontSize: 16,
+    color: 'red',
+    marginLeft: 15,
+    marginTop: 15,
   },
 });
 
